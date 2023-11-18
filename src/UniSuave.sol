@@ -28,6 +28,8 @@ contract UniSuave {
         uint256 buyAmount
     );
 
+    event blockNumberUpdated(uint64 blockNumber);
+
     function emitOrder(Order memory order) external payable {
         emit OrderCreated(
             order.creator, order.sellToken, order.buyToken, order.validTo, order.minSellAmount, order.buyAmount
@@ -49,5 +51,14 @@ contract UniSuave {
         Suave.confidentialStore(bid.id, "orderIntent", abi.encode(orderIntent));
 
         return abi.encodeWithSelector(this.emitOrder.selector, orderIntent.order);
+    }
+
+    function callback(uint64 blockNumber) external payable {
+        emit blockNumberUpdated(blockNumber);
+    }
+
+    function getExternalBlockNumber() public view returns (bytes memory) {
+        uint64 blockNumber = Suave.getBlockNumber();
+        return abi.encodeWithSelector(this.callback.selector, blockNumber);
     }
 }
