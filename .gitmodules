@@ -4,3 +4,6 @@
 [submodule "suave-geth"]
 	path = suave-geth
 	url = https://github.com/flashbots/suave-geth.git
+[submodule "lib/openzeppelin-contracts"]
+	path = lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts

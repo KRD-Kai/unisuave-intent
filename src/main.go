@@ -7,8 +7,8 @@ import (
 	"log"
 	"strings"
 
-	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/KRD-Kai/unisuave-intent/framework"
+	"github.com/ethereum/go-ethereum/accounts/abi"
 )
 
 type BlockNumberUpdated struct {
@@ -17,8 +17,10 @@ type BlockNumberUpdated struct {
 
 func main() {
 	fr := framework.New()
-	receipt := fr.DeployContract("out/UniSuave.sol/UniSuave.json").
-		SendTransaction("getExternalBlockNumber", nil, nil)
+	contract := fr.DeployContract("out/UniSuave.sol/UniSuave.json")
+
+	fmt.Println("Contract deployed at:", contract.Address())
+	receipt := contract.SendTransaction("updateExternalBlockNumber", nil, nil)
 	fmt.Println("Logs:", receipt.Logs)
 
 	fileContent, err := ioutil.ReadFile("out/UniSuave.sol/UniSuave.json")

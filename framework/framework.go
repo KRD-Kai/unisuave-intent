@@ -27,7 +27,7 @@ type Artifact struct {
 }
 
 func ReadArtifact(path string) (*Artifact, error) {
-	
+
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
@@ -187,6 +187,16 @@ func (f *Framework) DeployContract(path string) *Contract {
 
 	contract := sdk.GetContract(receipt.ContractAddress, artifact.Abi, f.clt)
 	return &Contract{addr: receipt.ContractAddress, fr: f, abi: artifact.Abi, Contract: contract}
+}
+
+func (f *Framework) RetrieveContract(contractAddress common.Address, path string) *Contract {
+	artifact, err := ReadArtifact(path)
+	if err != nil {
+		panic(err)
+	}
+
+	contract := sdk.GetContract(contractAddress, artifact.Abi, f.clt)
+	return &Contract{addr: contractAddress, fr: f, abi: artifact.Abi, Contract: contract}
 }
 
 func (c *Contract) Ref(acct *PrivKey) *Contract {
