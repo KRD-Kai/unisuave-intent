@@ -19,11 +19,6 @@ contract UniSuave {
         bytes signature;
     }
 
-    struct OrderSolution {
-        Suave.BidId bidId;
-        Order order;
-    }
-
     struct OrderSolutionResult {
         address solver;
         uint64 score; // egp score
@@ -58,7 +53,7 @@ contract UniSuave {
     // Emites order that solvers listen to
     function emitOrder(Order memory order, Suave.BidId bidId) external payable {
         emit OrderCreated(
-            bidId, order.creator, order.sellToken, order.buyToken, order.validTo, order.minSellAmount, order.buyAmount
+            bidId, order.creator, order.sellToken, order.buyToken, order.validTo, order.maxSellAmount, order.buyAmount
         );
     }
 
