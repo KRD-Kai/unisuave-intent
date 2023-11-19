@@ -9,7 +9,7 @@ contract UniSuave {
         address sellToken;
         address buyToken;
         uint32 validTo;
-        uint256 minSellAmount;
+        uint256 maxSellAmount;
         uint256 buyAmount;
     }
 
